@@ -2,25 +2,29 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use Illuminate\Database\Eloquent\Attributes\Boot;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    /* =====================
+        ROLE CONSTANTS
+    ====================== */
+    public const ROLE_CUSTOMER = 'customer';
+    public const ROLE_VENDOR   = 'vendor';
+    public const ROLE_ADMIN    = 'admin';
+
+    /* =====================
+        STATUS CONSTANTS
+    ====================== */
+    public const STATUS_ACTIVE  = 'active';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_BLOCKED = 'blocked';
+
     protected $fillable = [
         'name',
         'email',
@@ -28,55 +32,45 @@ class User extends Authenticatable
         'phone',
         'role',
         'status',
-        'avatar'
+        'avatar',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password' => 'hashed', //  Hash auto
         ];
     }
 
-
-    //check user is customer
+    /* =====================
+        ROLE CHECKS
+    ====================== */
     public function isCustomer(): bool
     {
-        return $this->role === 'customer';
+        return $this->role === self::ROLE_CUSTOMER;
     }
 
-
-    // check user is vendor
-    public function isVendor():bool
+    public function isVendor(): bool
     {
-        return $this->role ==='vendor';
+        return $this->role === self::ROLE_VENDOR;
     }
 
-    //check user is admin
-   public function isAdmin():bool
+    public function isAdmin(): bool
     {
-        return $this->role ==='admin';
+        return $this->role === self::ROLE_ADMIN;
     }
 
-    ////check user account is active
-    public function isActive() : bool
+    /* =====================
+        STATUS CHECK
+    ====================== */
+    public function isActive(): bool
     {
-        return $this->status === 'active';
+        return $this->status === self::STATUS_ACTIVE;
     }
 }

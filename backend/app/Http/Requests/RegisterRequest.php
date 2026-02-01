@@ -23,10 +23,10 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' =>['required', 'string', 'email','max:225','unique:users,email'],
-            'password' =>['required', 'confirmed', Password::min(8)],
-           'phone' => ['nullable', 'string', 'max:20'],
+           'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', Password::min(8)],
+            'phone'    => ['nullable', 'regex:/^(?:\+88)?01[3-9]\d{8}$/'],
         ];
     }
 
@@ -39,18 +39,20 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'নাম লিখুন | Name is required',
-            'name.max' => 'নাম সর্বোচ্চ ২৫৫ অক্ষর | Name maximum 255 characters',
+             'name.required' => 'নাম লিখুন | Name is required',
+             'name.max' => 'নাম সর্বোচ্চ ২৫৫ অক্ষর | Name maximum 255 characters',
 
             'email.required' => 'ইমেইল লিখুন | Email is required',
             'email.email' => 'সঠিক ইমেইল দিন | Please enter a valid email',
-            'email.unique' => 'এই ইমেইল দিয়ে একাউন্ট আছে | This email is already registered',
+            'email.unique'  => 'এই ইমেইল দিয়ে একাউন্ট আছে | Email already exists',
 
             'password.required' => 'পাসওয়ার্ড লিখুন | Password is required',
-            'password.confirmed' => 'পাসওয়ার্ড মিলছে না | Passwords do not match',
-            'password.min' => 'পাসওয়ার্ড কমপক্ষে ৮ অক্ষর | Password minimum 8 characters',
-
+            'password.confirmed' => 'পাসওয়ার্ড মিলছে না | Password mismatch',
+            
+            'phone.regex'   => 'সঠিক ফোন নম্বর দিন | Invalid phone number',
             'phone.max' => 'ফোন নম্বর সর্বোচ্চ ২০ অক্ষর | Phone maximum 20 characters',
+
+
         ];
     }
 

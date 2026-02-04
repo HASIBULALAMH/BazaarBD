@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LoginController extends Controller

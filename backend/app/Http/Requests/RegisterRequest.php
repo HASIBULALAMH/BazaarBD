@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
            'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(8)],
-            'phone'    => ['nullable', 'regex:/^(?:\+88)?01[3-9]\d{8}$/'],
+            'phone' => ['nullable', 'max:20', 'regex:/^(?:\+88)?01[3-9]\d{8}$/'],
         ];
     }
 
@@ -47,8 +47,9 @@ class RegisterRequest extends FormRequest
             'email.unique'  => 'এই ইমেইল দিয়ে একাউন্ট আছে | Email already exists',
 
             'password.required' => 'পাসওয়ার্ড লিখুন | Password is required',
+            'password.min' => 'পাসওয়ার্ড কমপক্ষে ৮ অক্ষর | Password must be at least 8 characters',
             'password.confirmed' => 'পাসওয়ার্ড মিলছে না | Password mismatch',
-            
+
             'phone.regex'   => 'সঠিক ফোন নম্বর দিন | Invalid phone number',
             'phone.max' => 'ফোন নম্বর সর্বোচ্চ ২০ অক্ষর | Phone maximum 20 characters',
 

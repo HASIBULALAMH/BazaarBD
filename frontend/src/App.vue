@@ -1,18 +1,16 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <nav class="bg-primary text-white shadow-lg">
-      <div class="container mx-auto px-4 py-4">
-        <h1 class="text-2xl font-bold">🛒 BazarBD</h1>
-      </div>
-    </nav>
+  <div class="font-sans">
+    <Navbar />
 
-    <main class="container mx-auto px-4 py-8">
-      <RouterView />
+    <main class="min-h-screen">
+      <router-view />
     </main>
 
+    <Footer />
   </div>
 </template>
 
-<script>
-  import { RouterView } from 'vue-router';
+<script setup>
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
 </script>
